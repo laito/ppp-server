@@ -124,6 +124,7 @@ class Api::UsersController < ApplicationController
 				rooms.append(room)
 			end
 			msg = rooms
+			msg = msg.as_json(:methods => [:thumb])
 		else
 			msg = { :status => "error", :message => "Error!", :html => "Error" }
 		end
@@ -138,6 +139,7 @@ class Api::UsersController < ApplicationController
 			lat = params[:latitude]
 			long = params[:longitude]
 			msg = Room.near([lat, long], 1)
+			msg = msg.as_json(:methods => [:thumb])
 		else
 			msg = { :status => "error", :message => "Error!", :html => "Error" }
 		end
