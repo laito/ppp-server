@@ -71,6 +71,13 @@ class Api::UsersController < ApplicationController
 		user = getuser params
 		if user
 			msg = user.rooms
+			respond_to do |format|
+				format.json  { render :json => msg.as_json(:methods => [:thumb]) } #render :json => msg }
+			end
+			#respond_with({
+			#  :rooms => msg.as_json(:methods => [:thumb]),
+			#})
+			return
 		else
 			msg = { :status => "error", :message => "Error!", :html => "Error" }
 		end

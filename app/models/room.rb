@@ -6,4 +6,10 @@ class Room < ActiveRecord::Base
 	has_many :roomies
 	has_many :users, through: :roomie
 	has_many :photos
+
+
+  def thumb
+  	self.photos.order("RANDOM()").first
+  end
+
 end
