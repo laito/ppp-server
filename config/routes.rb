@@ -4,8 +4,11 @@ PppServer::Application.routes.draw do
     post 'new' => 'users#new'
     post 'login' => 'users#login'
     post 'newroom' => 'users#newroom'
-    post 'allrooms' => 'users#listrooms'
-
+    post 'joinroom' => 'users#joinroom'
+    post 'myrooms' => 'users#listrooms'
+    post 'pastrooms' => 'users#joinedrooms'
+    post 'localrooms' => 'users#listlocalrooms'
+    post 'addphoto' => 'users#newphoto'
   end
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

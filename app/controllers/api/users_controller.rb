@@ -37,7 +37,7 @@ class Api::UsersController < ApplicationController
 			end
 			lat = params[:latitude]
 			long = params[:longitude]
-			room = Room.new(:name => name, :latitude => lat, :longitude => long)
+			room = Room.new(:name => name, :latitude => lat, :longitude => long, :user_id => user.id)
 			if key != -1
 				room.key = key
 			end
@@ -79,11 +79,57 @@ class Api::UsersController < ApplicationController
 		end
 	end
 
+	def joinroom
+		user = getuser params
+		msg = { :status => "error", :message => "Error!", :html => "Error" }
+		if user
+			roomid = params[:roomid]
+			room = Room.find(roomid)
+			auth = false
+			if room.key != -1
+				if not params[:key].blank?
+					if room.key.eql? params[:key]
+						auth = true
+					end
+				end
+			else
+				auth = true
+			end
+			if (not room.blank?) and auth
+				roomie = Roomie.new(:room_id => room.id, :user_id => user.id)
+				if roomie.save
+					msg = { :status => "ok", :message => "Success!", :html => "Room joined" }
+				end
+			end
+		end
+		respond_to do |format|
+			format.json  { render :json => msg }
+		end
+	end
+
+	def joinedrooms
+		user = getuser params
+		if user
+			roomies = Roomie.where("user_id = ?",user.id)
+			rooms = []
+			roomies.each do |roomie|
+				room = roomie.room
+				rooms.append(room)
+			end
+			msg = rooms
+		else
+			msg = { :status => "error", :message => "Error!", :html => "Error" }
+		end
+		respond_to do |format|
+			format.json  { render :json => msg }
+		end
+	end
+
 	def listlocalrooms
 		user = getuser params
 		if user
-			lat = params[:lat]
-			long = params[:long]
+			lat = params[:latitude]
+			long = params[:longitude]
 			msg = Room.near([lat, long], 1)
 		else
 			msg = { :status => "error", :message => "Error!", :html => "Error" }
