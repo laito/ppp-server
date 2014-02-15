@@ -163,8 +163,9 @@ class Api::UsersController < ApplicationController
 			respond_to do |format|
 			    if @picture.save
 			      format.json { render json: @picture, status: :created }
+			      format.html { render json: @picture, status: :created }
 			    else
-			      format.json { render json: @picture.errors, status: :unprocessable_entity }
+			      format.html { render json: @picture.errors, status: :unprocessable_entity }
 			    end
 			end
 		end
