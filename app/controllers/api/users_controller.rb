@@ -10,6 +10,7 @@ class Api::UsersController < ApplicationController
 		msg = { :status => "ok", :message => "Success!", :html => secret }
 		respond_to do |format|
 			format.json  { render :json => msg }
+			format.html  { render :json => msg }
 		end
 	end
 
@@ -48,6 +49,7 @@ class Api::UsersController < ApplicationController
 		end
 		respond_to do |format|
 			format.json  { render :json => msg }
+			format.html  { render :json => msg }
 		end
 	end
 
@@ -73,6 +75,7 @@ class Api::UsersController < ApplicationController
 			msg = user.rooms
 			respond_to do |format|
 				format.json  { render :json => msg.as_json(:methods => [:thumb]) } #render :json => msg }
+				format.html  { render :json => msg.as_json(:methods => [:thumb]) } #render :json => msg }
 			end
 			#respond_with({
 			#  :rooms => msg.as_json(:methods => [:thumb]),
@@ -83,6 +86,7 @@ class Api::UsersController < ApplicationController
 		end
 		respond_to do |format|
 			format.json  { render :json => msg }
+			format.html  { render :json => msg }
 		end
 	end
 
@@ -130,6 +134,7 @@ class Api::UsersController < ApplicationController
 		end
 		respond_to do |format|
 			format.json  { render :json => msg }
+			format.html  { render :json => msg }
 		end
 	end
 
